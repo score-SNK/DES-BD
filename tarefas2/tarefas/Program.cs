@@ -81,7 +81,7 @@ namespace tarefas
                         Console.ReadKey();
                         break;
                     case "6":
-                        Console.WriteLine("Descrever tarefa");
+                        Console.WriteLine("adicionar tarefa");
                         anotacoes.ano();
                         Console.ReadKey();
                         break;

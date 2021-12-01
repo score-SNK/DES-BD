@@ -23,6 +23,8 @@ namespace tarefas
         public int b;
         public int op;
 
+        public string ch;
+
 
         public void ano()
         {
@@ -70,9 +72,107 @@ namespace tarefas
 
         }
 
+        public void sele()
+        {
+            MySqlConnection conexao;
+
+            Console.WriteLine("Escolha a tarefa a ser checada");
+
+            conexao = new MySqlConnection("server=localhost;database=tarefas;uid=root");
+            try
+            {
+
+                conexao.Open();
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine(e.Message.ToString());
+                Console.WriteLine("Nao foi possivel conectar com o banco de dados");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            MySqlCommand cmd;
+
+            string sqlselect = "select * from nota";
+            cmd = new MySqlCommand(sqlselect, conexao);
+            //cmd.Parameters.AddWithValue("@i", i);
+            cmd.CommandText = sqlselect;
+            MySqlDataReader resultado = cmd.ExecuteReader();
+
+
+
+            while (resultado.Read())
+            {
+                Console.WriteLine("   ");
+                //Console.WriteLine("id:" + resultado["b"]);
+                Console.WriteLine("titulo da nota:" + resultado["notat"]);
+                // Console.WriteLine("descriçao da nota:" + resultado["notad"]);
+
+            }
+
+            conexao.Close();
+        }
+
         public void checaano()
         {
-            Console.WriteLine("Selecione uma anotação para ser acessada:");
+           // Console.WriteLine("Escolha o cadastro a ser checado");
+            sele();
+            ch = Console.ReadLine();
+            
+
+            conexao = new MySqlConnection("server=localhost;database=tarefas;uid=root");
+            try
+            {
+
+                conexao.Open();
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine(e.Message.ToString());
+                Console.WriteLine("Nao foi possivel conectar com o banco de dados");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            MySqlCommand cmd;
+
+            string sqlselect = "select * from nota where notat=@ch";
+            cmd = new MySqlCommand(sqlselect, conexao);
+            cmd.Parameters.AddWithValue("@ch", ch);
+            cmd.CommandText = sqlselect;
+            MySqlDataReader resultado = cmd.ExecuteReader();
+
+
+
+            while (resultado.Read())
+            {
+                Console.WriteLine("   ");
+                //Console.WriteLine("id:" + resultado["b"]);
+                Console.WriteLine("titulo da nota:" + resultado["notat"]);
+                Console.WriteLine("descriçao da nota:" + resultado["notad"]);
+
+            }
+
+
+            /*MySqlCommand cmd;
+            cmd = new MySqlCommand(sql, conexao);
+
+            string sqlselect = "select * from nottarefa where i=@opit";
+            cmd = new MySqlCommand(sqlselect, conexao);
+            cmd.Parameters.AddWithValue("@opit", opit);
+            cmd.CommandText = sqlselect;
+            MySqlDataReader resultado = cmd.ExecuteReader();
+
+
+
+            while (resultado.Read())
+            {
+                Console.WriteLine("   ");
+                Console.WriteLine("id:" + resultado["i"]);
+                Console.WriteLine("descriçao da tarefa:" + resultado["tarefad"]);
+                //Console.WriteLine("prazo:" + resultado["tarefap"]);
+            }*/
+
+            /*Console.WriteLine("Selecione uma anotação para ser acessada:");
 
             for (int b = 0; b < u; b++)
             {
@@ -97,7 +197,7 @@ namespace tarefas
             {
                 Console.WriteLine("entrada invalida");
                 Console.ReadLine();
-            }
+            }*/
 
         }
     }

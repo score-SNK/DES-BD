@@ -74,6 +74,8 @@ namespace tarefas
             cpf = Console.ReadLine();
             Console.WriteLine("Adicione um prazo de conclusão");
             cep = Console.ReadLine();
+            Console.WriteLine("Adicione um numero de identificaçao para a tarefa");
+            i = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Tarefa adicionada");
 
@@ -97,7 +99,7 @@ namespace tarefas
             //conexao.Close();
 
 
-            idi();
+            //idi();
 
 
             Console.ReadKey();
@@ -106,6 +108,41 @@ namespace tarefas
 
         public int idi()
         {
+            MySqlConnection conexao;
+
+
+            conexao = new MySqlConnection("server=localhost;database=tarefas;uid=root");
+            try
+            {
+
+                conexao.Open();
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine(e.Message.ToString());
+                Console.WriteLine("Nao foi possivel conectar com o banco de dados");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            MySqlCommand cmd;
+
+            string sqlselect = "select * from nottarefa";
+            cmd = new MySqlCommand(sqlselect, conexao);
+            //cmd.Parameters.AddWithValue("@i", i);
+            cmd.CommandText = sqlselect;
+            MySqlDataReader resultado = cmd.ExecuteReader();
+
+
+
+            while (resultado.Read())
+            {
+                Console.WriteLine("   ");
+                Console.WriteLine("id:" + resultado["i"]);
+                Console.WriteLine("titulo da tarefa:" + resultado["tarefat"]);
+                Console.WriteLine("prazo da tarefa:" + resultado["tarefap"]);
+
+            }
+
             i++;
             return i;
 
@@ -155,7 +192,7 @@ namespace tarefas
                 Console.WriteLine("prazo da tarefa:" + resultado["tarefap"]);
                 
             }
-            Console.ReadKey();
+            //Console.ReadKey();
 
             /*MySqlConnection conexao;
 
@@ -301,6 +338,10 @@ namespace tarefas
         {
             Console.WriteLine("Escolha o cadastro a ser checado");
 
+            chec();
+
+            opit = int.Parse(Console.ReadLine());
+
             MySqlConnection conexao;
 
 
@@ -321,7 +362,9 @@ namespace tarefas
             MySqlCommand cmd;
             cmd = new MySqlCommand(sql, conexao);
 
-            string sqlselect = "select * from nottarefa";
+            string sqlselect = "select * from nottarefa where i=@opit";
+            cmd = new MySqlCommand(sqlselect, conexao);
+            cmd.Parameters.AddWithValue("@opit", opit);
             cmd.CommandText = sqlselect;
             MySqlDataReader resultado = cmd.ExecuteReader();
 
@@ -329,10 +372,10 @@ namespace tarefas
 
             while (resultado.Read())
             {
-                Console.WriteLine("numero:" + resultado["i"]);
-                Console.WriteLine("titulo:" + resultado["tarefat"]);
-               // Console.WriteLine("descriçao:" + resultado["cpf"]);
-                Console.WriteLine("prazo:" + resultado["tarefap"]);
+                Console.WriteLine("   ");
+                Console.WriteLine("id:" + resultado["i"]);
+                Console.WriteLine("descriçao da tarefa:" + resultado["tarefad"]);
+                //Console.WriteLine("prazo:" + resultado["tarefap"]);
             }
 /*
             chec();
