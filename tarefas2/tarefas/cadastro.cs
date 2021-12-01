@@ -115,12 +115,47 @@ namespace tarefas
         {
 
 
-            for (int a = 0; a < i ; a++)
+            /* for (int a = 0; a < i ; a++)
+             {
+
+                 Console.WriteLine("Tarefa: " + a + " // Titulo: " + vetor[a] + " // Prazo: " + vetorcep[a]);
+
+             }*/
+            MySqlConnection conexao;
+
+
+            conexao = new MySqlConnection("server=localhost;database=tarefas;uid=root");
+            try
             {
 
-                Console.WriteLine("Tarefa: " + a + " // Titulo: " + vetor[a] + " // Prazo: " + vetorcep[a]);
-
+                conexao.Open();
             }
+            catch (Exception e)
+            {
+                //Console.WriteLine(e.Message.ToString());
+                Console.WriteLine("Nao foi possivel conectar com o banco de dados");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
+            MySqlCommand cmd;
+
+            string sqlselect = "select * from nottarefa";
+            cmd = new MySqlCommand(sqlselect, conexao);
+            //cmd.Parameters.AddWithValue("@i", i);
+            cmd.CommandText = sqlselect;
+            MySqlDataReader resultado = cmd.ExecuteReader();
+
+
+
+            while (resultado.Read())
+            {
+                Console.WriteLine("   ");
+                Console.WriteLine("id:" + resultado["i"]);
+                Console.WriteLine("titulo da tarefa:" + resultado["tarefat"]);
+                Console.WriteLine("prazo da tarefa:" + resultado["tarefap"]);
+                
+            }
+            Console.ReadKey();
 
             /*MySqlConnection conexao;
 

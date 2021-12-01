@@ -14,21 +14,24 @@ namespace tarefas
 
         static void Main(string[] args)
         {
+            
             /*MySqlConnection conexao;
+
 
             conexao = new MySqlConnection("server=localhost;database=tarefas;uid=root");
             try
             {
 
                 conexao.Open();
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 //Console.WriteLine(e.Message.ToString());
                 Console.WriteLine("Nao foi possivel conectar com o banco de dados");
                 Console.ReadKey();
                 Environment.Exit(0);
-            }*/
-            //MySqlCommand cmd;
+            }
+            MySqlCommand cmd;*/
 
             string[] vet = new string[50];
 
